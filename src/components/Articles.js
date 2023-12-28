@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Articles({ articles }) {
-    const [sortedArticles, setSortedArticles] = useState(articles);
+    const [sortedArticles, setSortedArticles] = useState([]);
+
+    useEffect(() => {
+        // Sort articles by upvotes in descending order by default
+        const sortedByUpvotes = [...articles].sort((a, b) => b.upvotes - a.upvotes);
+        setSortedArticles(sortedByUpvotes);
+    }, [articles]);
 
     const sortByUpvotes = () => {
         const sortedByUpvotes = [...articles].sort((a, b) => b.upvotes - a.upvotes);
         setSortedArticles(sortedByUpvotes);
     };
-
+    
     const sortByDate = () => {
         const sortedByDate = [...articles].sort((a, b) => new Date(b.date) - new Date(a.date));
         setSortedArticles(sortedByDate);
